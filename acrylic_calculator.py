@@ -2,39 +2,70 @@ import streamlit as st
 import math
 
 # ==========================
-# 🎨 إعداد الصفحة
+# ⚙️ إعداد الصفحة
 # ==========================
 st.set_page_config(page_title="Beck Acrylic", layout="wide")
 
 # ==========================
-# 🎨 UI STYLE
+# 🎨 CSS احترافي
 # ==========================
 st.markdown("""
 <style>
-body, .stApp {background:#000;color:#D4B200;}
-h1,h2,h3{color:#D4B200!important;}
 
-.section {
-    background:#111;
-    padding:20px;
-    border-radius:12px;
-    margin-bottom:15px;
-    border:1px solid #333;
+/* مساحة الصفحة */
+.block-container {
+    padding-top: 2rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
 }
 
+/* خلفية */
+body, .stApp {
+    background-color: #000;
+    color: #D4B200;
+}
+
+/* العناوين */
+h1, h2, h3 {
+    color: #D4B200 !important;
+}
+
+/* كروت */
+.card {
+    background: #111;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+/* النتيجة */
 .result {
-    background:#D4B200;
-    padding:20px;
-    border-radius:12px;
-    color:black;
-    font-weight:bold;
-    font-size:30px;
-    text-align:center;
+    background: linear-gradient(135deg, #D4B200, #FFD700);
+    padding: 25px;
+    border-radius: 15px;
+    color: black;
+    font-weight: bold;
+    font-size: 32px;
+    text-align: center;
 }
 
-.small {
-    color:#aaa;
-    font-size:14px;
+/* مدخلات */
+input {
+    background: #222 !important;
+    color: white !important;
+}
+
+/* راديو */
+div[role="radiogroup"] {
+    gap: 20px;
+}
+
+/* Footer */
+.footer {
+    text-align:center;
+    color:#777;
+    margin-top:30px;
 }
 
 </style>
@@ -43,29 +74,31 @@ h1,h2,h3{color:#D4B200!important;}
 # ==========================
 # 🏷️ العنوان
 # ==========================
-st.title("Beck Acrylic System")
+st.markdown("## 🚀 Beck Acrylic System")
 
 # ==========================
 # 🔘 اختيار النوع
 # ==========================
-st.markdown("### اختر نوع الحساب")
-
 mode = st.radio(
-    "",
+    "اختر نوع الحساب",
     ["🔤 حروف", "🟩 لوجو", "🧱 كلادينج"],
     horizontal=True
 )
 
 # ==========================
-# 🔤 حروف
+# 🔤 الحروف
 # ==========================
 if mode == "🔤 حروف":
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns([1,1,1])
 
     with col1:
-        st.markdown("<div class='section'>", unsafe_allow_html=True)
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         w = st.number_input("عرض الحرف (سم)", value=100.0)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         h = st.number_input("ارتفاع الحرف (سم)", value=50.0)
         st.markdown("</div>", unsafe_allow_html=True)
 
@@ -81,21 +114,24 @@ if mode == "🔤 حروف":
     st.markdown(f"<div class='result'>{meters:.2f} متر طولي</div>", unsafe_allow_html=True)
 
 # ==========================
-# 🟩 لوجو
+# 🟩 اللوجو
 # ==========================
 if mode == "🟩 لوجو":
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("<div class='section'>", unsafe_allow_html=True)
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         w = st.number_input("عرض اللوجو (سم)", value=100.0)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         h = st.number_input("ارتفاع اللوجو (سم)", value=100.0)
         st.markdown("</div>", unsafe_allow_html=True)
 
     M = max(w, h)
 
-    # Base
     if M <= 60: base = 1
     elif M <= 70: base = 1.5
     elif M <= 100: base = 2
@@ -105,7 +141,6 @@ if mode == "🟩 لوجو":
     elif M <= 200: base = 5
     else: base = 6
 
-    # شكل
     R = min(w, h) / M
 
     if R < 0.4:
@@ -121,29 +156,32 @@ if mode == "🟩 لوجو":
     st.markdown(f"<div class='result'>{meters:.2f} متر طولي</div>", unsafe_allow_html=True)
 
 # ==========================
-# 🧱 كلادينج
+# 🧱 الكلادينج
 # ==========================
 if mode == "🧱 كلادينج":
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown("<div class='section'>", unsafe_allow_html=True)
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         w = st.number_input("عرض (سم)", value=400.0)
-        h = st.number_input("ارتفاع (سم)", value=100.0)
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col2:
-        st.markdown("<div class='section'>", unsafe_allow_html=True)
-        qty = st.number_input("عدد", value=10)
-        depth = st.number_input("دوسر", value=2.0)
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        h = st.number_input("ارتفاع (سم)", value=100.0)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    total = (w * h * qty) / 10000  # متر مربع
+    with col3:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        qty = st.number_input("عدد", value=10)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    total = (w * h * qty) / 10000
 
     st.markdown(f"<div class='result'>{total:,.2f} متر مربع</div>", unsafe_allow_html=True)
 
 # ==========================
-# 🧠 Footer
+# 🔻 Footer
 # ==========================
-st.markdown("<div class='small'>Developed for Beck Advertising</div>", unsafe_allow_html=True)
+st.markdown("<div class='footer'>Developed for Beck Advertising</div>", unsafe_allow_html=True)
